@@ -1,3 +1,8 @@
+/*
+   deploy to netlify
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a70f5038-9987-4ce2-b49b-537565a8e9b8/deploy-status)]
+(https://app.netlify.com/sites/hyf-sam-ecommerce/deploys)*/
+
 import React, { useState } from "react";
 import categories from "./fake-data/all-categories";
 import products from "./fake-data/all-products";
