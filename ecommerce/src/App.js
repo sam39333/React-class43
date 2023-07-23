@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import categories from "./fake-data/all-categories";
 import products from "./fake-data/all-products";
@@ -9,24 +7,18 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
+    setSelectedCategory((prevCategory) =>
+      prevCategory === category ? null : category
+    );
   };
 
   const filteredProducts = selectedCategory
-    ? products.filter((product) => {
-        const category = product.category.toLowerCase();
+    ? products.filter(({ category }) => {
         const selected = selectedCategory
           .replace("FAKE: ", "")
           .toLowerCase()
           .trim();
-
-        if (selected === "men's clothing") {
-          return category === "men's clothing";
-        } else if (selected === "women's clothing") {
-          return category === "women's clothing";
-        } else {
-          return category === selected;
-        }
+        return category.toLowerCase().trim() === selected;
       })
     : products;
 
@@ -47,11 +39,11 @@ function App() {
         </ul>
       </nav>
       <div className="products-grid">
-        {filteredProducts.map((product) => (
-          <div key={product.id} className="product-item">
-            <img src={product.image} alt={product.title} />
-            <h2>{product.title}</h2>
-            <p>{product.description}</p>
+        {filteredProducts.map(({ id, image, title, description }) => (
+          <div key={id} className="product-item">
+            <img src={image} alt={title} />
+            <h2>{title}</h2>
+            <p>{description}</p>
           </div>
         ))}
       </div>
