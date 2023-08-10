@@ -62,16 +62,7 @@ function App() {
 
   return (
     <div className="App">
-      <nav className="navbar">
-        <ul className="navbar-list">
-          <li>
-            <Link to="/">Products</Link>
-          </li>
-          <li>
-            <Link to="/favourites">Favorites</Link>
-          </li>
-        </ul>
-      </nav>
+     
       {!isProductSelected && <h1>Products</h1>}
       {!isProductSelected && (
         <nav className="navbar">
@@ -85,6 +76,14 @@ function App() {
                 {category}
               </li>
             ))}
+            <ul className="navbar-list"  id="navbar">
+              <li>
+                <Link to="/">Products</Link>
+              </li>
+              <li>
+                <Link to="/favourites">Favorites</Link>
+              </li>
+            </ul>
           </ul>
         </nav>
       )}
@@ -106,10 +105,7 @@ function App() {
                       onClick={() => toggleFavorite(Number(id))}
                       className="favorite-button"
                     >
-                      <img
-                        src={"./assets/heart-regular.svg"} 
-                        alt="Favorite"
-                      />
+                      <img src={"./assets/heart-regular.svg"} alt="Favorite" />
                     </button>
                     <h2>{title}</h2>
                     <p>{description}</p>

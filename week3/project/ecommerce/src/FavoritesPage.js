@@ -24,7 +24,7 @@ function FavoritesPage() {
     <div className="favorites-page">
       <h1>Favorites</h1>
       {favoriteProducts.length === 0 ? (
-        <p>No favorite products yet.</p>
+        <p>You haven't chosen any favourites yet!</p>
       ) : (
         <div className="favorites-list">
           {favoriteProducts.map((product) => (

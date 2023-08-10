@@ -6,7 +6,7 @@ function ProductDetail() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const navigate = useNavigate();
-  const { favorites, toggleFavorite } = useFavoriteContext(); 
+  const { favorites, toggleFavorite } = useFavoriteContext();
 
   useEffect(() => {
     fetch(`https://fakestoreapi.com/products/${id}`)
@@ -17,30 +17,41 @@ function ProductDetail() {
     };
   }, [id, navigate]);
 
-  
-  const isFavorite = false;
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    setIsFavorite(favorites.includes(Number(id)));
+  }, [favorites, id]);
+
+  const handleToggleFavorite = () => {
+    toggleFavorite(Number(id));
+    setIsFavorite(!isFavorite);
+  };
 
   return (
     <div className="product-detail">
       {product ? (
-        <>
+        <div className="product-container">
           <div className="product-image">
-            <img src={product.image} alt={product.title} />
-            <button
-              onClick={() => toggleFavorite(Number(id))}
-              className="favorite-button"
-            >
+            <button onClick={handleToggleFavorite} className="favorite-button">
               <img
-                src={"./assets/heart-regular.svg"} 
-                alt="Favorite"
+                src={
+                  isFavorite
+                    ? "/path/to/heart-solid.svg"
+                    : "/path/to/heart-regular.svg"
+                }
+                alt={isFavorite ? "Solid Heart" : "Regular Heart"}
+                className="heart-icon"
+                
               />
             </button>
+            <img src={product.image} alt={product.title} />
           </div>
           <div className="product-description">
             <h2>{product.title}</h2>
             <p>{product.description}</p>
           </div>
-        </>
+        </div>
       ) : (
         <p>Loading...</p>
       )}
