@@ -4,12 +4,21 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const columnRoutes = require("./routes/columnRoutes");
 const userRoutes = require("./routes/userRoutes");
+const { connectToDatabase } = require("./db");
 
-app.use(cors());
+connectToDatabase();
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true
+  })
+);
+
 app.use(bodyParser.json());
 
+app.use("/api", userRoutes);
 app.use("/api", columnRoutes);
-app.use("/api/user", userRoutes);
 
 const PORT = 5000;
 app.listen(PORT, () => {

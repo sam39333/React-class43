@@ -2,34 +2,77 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  color: #feba57;
-  background-color: #222e2c;
+  color: #ffffff;
+  
+  
+}
+.home-page {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to top right, #fcfcfc  0%, #a9a89a 50%, #ffffff 100%);
+  color: black;
+  padding: 50px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
-.home-page {
-  text-align: center;
-  padding: 2rem;
+.logo-text {
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.dot {
+  color: #0184f7; 
+  font-size: 28px;
+  margin-top: -5px; 
+  margin-left: 2px; 
+}
+
+.home-image{
+  border-radius: 80px;
+  
+}
+
+.content {
+  flex: 1;
+  text-align: left;
+  padding-right: 50px; 
 }
 
 .app-title {
-  font-size: 54px;
-  color: #feba57;
+  font-size: 38px;
+  color: black;
   font-weight: bold;
 }
 
 .app-description {
-  font-size: 16px;
+  font-size: 25px;
+  font-family: monospace;
 }
 
 .get-started-button {
-  color: #feba57;
-  background-color: #222e2c;
-  border: 2px solid #feba57;
+  color: #0083ff;
+  margin-top: 20px;
   padding: 10px 20px;
+  border-radius: 10px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
 }
+
+.home-image {
+  width: 457px;
+  height: 762px;
+}
+
 
 .get-started-button::after {
   content: "";
@@ -39,7 +82,7 @@ body {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(254, 186, 87, 0.3) 100%
+     rgba(62, 126, 255, 0.3) 100%
   );
   top: 100%;
   left: 0;
@@ -56,6 +99,12 @@ body {
   flex-direction: column;
   align-items: center;
   display: flex;
+  position: fixed;  
+  top: 0;         
+  left: 0;        
+  width: 100%;    
+  height: 100%;   
+  background: linear-gradient(to top right, #fcfcfc  0%, #a9a89a 50%, #ffffff 100%);
 }
 
 .name-page h2 {
@@ -73,15 +122,15 @@ body {
   width: 25%;
   padding: 10px;
   margin-bottom: 15px;
-  border: 2px solid #feba57;
+   border: 2px solid #474747;
   border-radius: 4px;
 }
 
 .continue-button {
-  color: #feba57;
-  background-color: #222e2c;
-  border: 2px solid #feba57;
+  color: #0083ff;  
+  margin-top: 20px;
   padding: 10px 20px;
+  border-radius: 10px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -94,7 +143,7 @@ body {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(254, 186, 87, 0.3) 100%
+        rgba(20, 149, 255, 0.3) 100%
   );
   top: 100%;
   left: 0;
@@ -105,16 +154,24 @@ body {
   top: 0%;
 }
 
-.kanban-view-page {
+.todo-view-page{
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   justify-content: space-between;
   padding: 2rem;
+  position: fixed;  
+  top: 0;         
+  left: 0;        
+  width: 100%;   
+  height: 100%;   
+    background: #f3f3f3;
+ color: #464444;
 }
 
-.kanban-column {
+.todo-column {
   flex: 1;
   padding: 1rem;
-  border: 1px solid #d8daef;
+  border: 1px solid #000000;
   border-radius: 5px;
   margin: 0 1rem;
 }
@@ -122,11 +179,11 @@ body {
 .task-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
+  margin-top: 3rem;
 }
 .task-table select {
   width: 100%;
-  padding: 0.25rem;
+  padding: 0.27rem;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -135,14 +192,24 @@ body {
 .task-table th,
 .task-table td {
   padding: 0.5rem;
-  border-bottom: 1px solid #d8daef;
+  border-bottom: 1px solid #3d0334;
   text-align: left;
 }
 
 .add-task-button {
   margin-top: 1rem;
   padding: 0.5rem 1rem;
-  background-color: #4e2895;
+  background-color: #0184f7;
+  color: #d8daef;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.save-button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #0184f7;
   color: #d8daef;
   border: none;
   border-radius: 5px;
@@ -150,16 +217,40 @@ body {
 }
 
 .filter {
-  margin: 50px 0px 90px 50px;
   display: flex;
   align-items: center;
 }
 
 .filter-select {
   margin-left: 10px;
-  background-color: #d8daef;
+   background-color: #ffffff;
   color: black;
 }
+.tag-option {
+  display: grid;
+  align-items: center;
+  margin: 10px 10px;
+
+  position: relative;
+}
+
+.tag-label {
+  cursor: pointer;
+}
+
+
+
+.tag-counter {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: rgb(150, 150, 150);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-size: 12px;
+}
+
 
 .delete-button {
   background-color: red;
@@ -170,38 +261,46 @@ body {
   cursor: pointer;
 }
 
+
+.add-tag-button{
+  border: none;
+  background: none;
+}
+
+.add-tag-button img {
+   width:20px;
+  height:20px
+}
+
+
+.remove-tag-button{
+  border: none;
+  background: none;
+}
+
+
+.remove-tag-button img{
+  width:20px;
+  height:20px
+
+}
+
 .nav-bar {
-  display: flex;
+    background: linear-gradient(to top right, #fcfcfc  0%, #a9a89a 50%, #ffffff 100%);
+  border-radius: 20px;
+  display: grid;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
+  padding: 3rem;
 }
 
 .nav-link {
-  color: #feba57;
-  text-decoration: none;
-  background-color: #222e2c;
-  border: 2px solid #feba57;
-  padding: 10px 20px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
 }
-.nav-link::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(254, 186, 87, 0.3) 100%
-  );
-  top: 100%;
-  left: 0;
-  transition: top 1s;
-}
-
-.nav-link:hover::after {
-  top: 0%;
+.nav-link img {
+  margin:30px;
+ width:50px;
+  height:50px;
 }

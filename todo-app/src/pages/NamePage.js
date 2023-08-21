@@ -8,39 +8,36 @@ const NamePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState(""); 
+  const [password, setPassword] = useState("");
 
-   const registerUser = async (userName, password) => {
-     try {
-       const response = await fetch("http://localhost:5000/api/register", {
-         method: "POST",
-         headers: { "Content-Type": "application/json" },
-         body: JSON.stringify({ userName, password })
-       });
+  const registerUser = async (userName, password) => {
+    try {
+      const response = await fetch("http://localhost:5000/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userName, password })
+      });
 
-       const data = await response.json();
-       console.log(data.message); 
-     } catch (error) {
-       console.error("Error registering user:", error);
-     }
-   };
+      const data = await response.json();
+      console.log(data.message);
+    } catch (error) {
+      console.error("Error registering user:", error);
+    }
+  };
 
   const handleContinue = async () => {
-  
     const hashedPassword = await bcrypt.hash(password, 10);
-
 
     dispatch(setUser(userName, hashedPassword));
 
     registerUser(userName, password);
 
-   
-    navigate("/kanban-view");
+    navigate("/todo-view");
   };
 
   return (
     <div className="name-page">
-      <h2>Welcome to the Todo App!</h2>
+      <h2>Welcome to the Todo List!</h2>
       <p>Please enter your name and password to continue:</p>
       <input
         className="name-input"

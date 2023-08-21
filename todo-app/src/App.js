@@ -1,9 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import KanbanViewPage from "./pages/KanbanViewPage";
+import TodoViewPage from "./pages/TodoViewPage";
 import NamePage from "./pages/NamePage";
-
 import "./App.css";
 
 function App() {
@@ -12,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/name" element={<NamePage />} />
-        <Route path="/kanban-view" element={<KanbanViewPage />} />
+        <Route path="/todo-view" element={<TodoViewPage />} />
       </Routes>
     </Router>
   );

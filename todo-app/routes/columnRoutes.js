@@ -1,36 +1,25 @@
 const express = require("express");
-const router = express.Router(); 
+const router = express.Router();
+const { ObjectId } = require("mongodb");
+const { client, dbName } = require("../db");
 
-let columns = [];
+router.post("/save-columns", async (req, res) => {
+  const { userId, column } = req.body;
 
-router.get("/columns", (req, res) => {
-  res.json(columns);
-});
+  try {
+    const db = client.db(dbName);
+    const columnsCollection = db.collection("columns");
 
+    const result = await columnsCollection.insertOne({
+      userId: ObjectId(userId),
+      column
+    });
 
-
-router.put("/columns/:id", (req, res) => {
-  const { id } = req.params;
-  const updatedColumn = req.body;
-
-  
-  const columnIndex = columns.findIndex((column) => column._id === id);
-
-  if (columnIndex !== -1) {
-    columns[columnIndex] = updatedColumn;
-    res.json(updatedColumn);
-  } else {
-    res.status(404).json({ message: "Column not found" });
+    res.status(200).json({ success: true, columnId: result.insertedId });
+  } catch (error) {
+    console.error("Error creating column:", error);
+    res.status(500).json({ success: false, message: "Error creating column" });
   }
-});
-
-
-
-router.post("/columns", (req, res) => {
- 
-  const newColumn = req.body;
-  columns.push(newColumn);
-  res.status(201).json(newColumn);
 });
 
 module.exports = router;

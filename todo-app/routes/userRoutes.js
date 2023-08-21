@@ -1,21 +1,34 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-
-const users = [];
+const { client, dbName } = require("../db");
 
 router.post("/register", async (req, res) => {
+  const { userName, password } = req.body;
+
+  if (!userName || !password) {
+    return res
+      .status(400)
+      .json({ message: "Please provide username and password." });
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const usersCollection = client.db(dbName).collection("users");
+
   try {
-    const { userName, password } = req.body;
+    const existingUser = await usersCollection.findOne({ userName });
+    if (existingUser) {
+      return res.status(400).json({ message: "Username already exists." });
+    }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = { userName, password: hashedPassword };
+    await usersCollection.insertOne(newUser);
 
-    users.push({ userName, password: hashedPassword });
-
-    res.json({ message: "User registered successfully!" });
+    return res.status(201).json({ message: "User registered successfully." });
   } catch (error) {
     console.error("Error registering user:", error);
-    res.status(500).json({ error: "An error occurred during registration." });
+    return res.status(500).json({ message: "Internal server error." });
   }
 });
 

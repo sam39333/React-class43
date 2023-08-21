@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setColumns } from "../redux/columnsSlice";
 
-const KanbanViewPage = () => {
+const TodoViewPage = () => {
   const statuses = ["Not Started", "Working on it", "Stuck", "Done"];
   const statusColors = ["#fff", "#eddd41", "#ddabc2", "#5bdb47"];
 
@@ -57,17 +57,41 @@ const KanbanViewPage = () => {
     dispatch(setColumns(updatedColumns));
   };
 
-  return (
-    <div className="kanban-view-page">
-      <nav className="nav-bar">
-        <Link to="/" className="nav-link">
-          Home
-        </Link>
-      </nav>
-      <div className="kanban-column">
-        <h3>This Month</h3>
+  const handleSaveColumns = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/save-columns", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ columns }) 
+      });
 
+      const data = await response.json();
+      console.log(data.message);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const tagsCount = columns.reduce((count, column) => {
+    column.tags.forEach((tag) => {
+      count[tag] = (count[tag] || 0) + 1;
+    });
+    return count;
+  }, {});
+
+  const tagOptions = ["work", "personal", "school", "non-profit"];
+
+  return (
+    <div className="todo-view-page">
+      <nav className="nav-bar">
         <div>
+          <Link to="/" className="nav-link">
+            <img
+              src="https://static.thenounproject.com/png/1228447-200.png"
+              alt="Home Icon"
+              className="icon"
+            />
+          </Link>
+
           <label className="filter">
             Filter:
             <select
@@ -82,7 +106,26 @@ const KanbanViewPage = () => {
               <option value="non-profit">Non-profit</option>
             </select>
           </label>
+
+          {tagOptions.map((tag) => (
+            <div key={tag} className="tag-option">
+              <span
+                className={`tag-label ${
+                  selectedTagFilter === tag ? "selected" : ""
+                }`}
+                onClick={() => setSelectedTagFilter(tag)}
+              >
+                {tag}
+              </span>
+              {selectedTagFilter === tag && (
+                <span className="tag-counter">{tagsCount[tag]}</span>
+              )}
+            </div>
+          ))}
         </div>
+      </nav>
+      <div className="todo-column">
+        <h3>This Month</h3>
 
         <table className="task-table">
           <thead>
@@ -165,8 +208,7 @@ const KanbanViewPage = () => {
                     </button>
                   </td>
                   <td>
-                    <label>
-                      Select Tag:
+                    <label className="tag">
                       <select
                         value={column.newTag}
                         onChange={(e) => {
@@ -186,15 +228,26 @@ const KanbanViewPage = () => {
                       </select>
                     </label>
                     {column.tags.length === 0 ? (
-                      <button onClick={() => handleAddTag(columnIndex)}>
-                        Add
+                      <button
+                        className="add-tag-button"
+                        onClick={() => handleAddTag(columnIndex)}
+                      >
+                        <img
+                          src="https://cdn2.iconfinder.com/data/icons/interface-part-2/32/plus-512.png"
+                          alt="Add Tag Icon"
+                          className="icon"
+                        />
                       </button>
                     ) : (
                       <button
                         className="remove-tag-button"
                         onClick={() => handleRemoveTag(columnIndex, 0)}
                       >
-                        Remove Tag
+                        <img
+                          src="https://cdn2.iconfinder.com/data/icons/interface-part-2/32/minus-512.png"
+                          alt="remove Tag Icon"
+                          className="icon"
+                        />
                       </button>
                     )}
                   </td>
@@ -214,7 +267,12 @@ const KanbanViewPage = () => {
                     })
                   }
                 >
-                  Add Column
+                  Add Task
+                </button>
+              </td>
+              <td>
+                <button className="save-button" onClick={handleSaveColumns}>
+                  Save
                 </button>
               </td>
             </tr>
@@ -225,4 +283,4 @@ const KanbanViewPage = () => {
   );
 };
 
-export default KanbanViewPage;
+export default TodoViewPage;

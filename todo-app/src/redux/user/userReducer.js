@@ -1,22 +1,22 @@
-
-import { SET_USER } from "./userActionTypes";
+//import { SET_USER } from "./userActionTypes";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   userName: "",
-  password: "",
+  password: ""
 };
 
-const userReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case SET_USER:
-      return {
-        ...state,
-        userName: action.payload.userName,
-        password: action.payload.password,
-      };
-    default:
-      return state;
+const userSlice = createSlice({
+  name: "user",
+  initialState,
+  reducers: {
+    setUser: (state, action) => {
+      state.userName = action.payload.userName;
+      state.password = action.payload.password;
+    }
   }
-};
+});
 
-export default userReducer;
+export const { setUser } = userSlice.actions;
+export default userSlice.reducer;
+
